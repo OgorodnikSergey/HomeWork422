@@ -3,6 +3,7 @@ package ru.ogorodnik.homework421;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -10,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class ItemsDataAdapter extends BaseAdapter {
 
     // Хранит список всех элементов списка
     private List<ItemData> items;
+    Button buttonDel;
 
     // LayoutInflater – класс, который из
     // layout-файла создает View-элемент.
@@ -28,12 +29,15 @@ public class ItemsDataAdapter extends BaseAdapter {
 
     // Слушает все изменения галочки и меняет
     // состояние конкретного ItemData
-  //  private CompoundButton.OnCheckedChangeListener myCheckChangeList
+
+    // Скорее всего здесь надо прописать нажатие кнопки Удалить....
+
+ //   private CompoundButton.OnCheckedChangeListener myCheckChangeList
  //           = new CompoundButton.OnCheckedChangeListener() {
- //       public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
- //           items.get((Integer) buttonView.getTag()).setChecked(isChecked);
+ //      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+ //           items.get((Integer) buttonView.getTag());
  //       }
-//    };
+ // };
 
 
     // Конструктор, в который передается контекст
@@ -111,8 +115,12 @@ public class ItemsDataAdapter extends BaseAdapter {
         image.setImageDrawable(itemData.getImage());
         title.setText(itemData.getTitle());
         subtitle.setText(itemData.getSubtitle());
-      //  buttonDel.setOnCheckedChangeListener(myCheckChangeList);
-     //   buttonDel.setTag(position);
+
+        // buttonDel.setOnCheckedChangeListener(myCheckChangeList);
+ //       checkBox.setOnCheckedChangeListener(myCheckChangeList);
+
+        //    buttonDel.setOnItemLongClickListener(position);
+       buttonDel.setTag(position);
      //   buttonDel.setChecked(itemData.isChecked());
 
         return view;

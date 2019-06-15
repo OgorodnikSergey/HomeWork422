@@ -14,12 +14,9 @@ import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Генератор случайностей
-    private Random random = new Random();
     // Наш адаптер
     private ItemsDataAdapter adapter;
     // Список картинок, которые мы будем брать для нашего списка
@@ -36,20 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         fillImages();
-      //  generateRandomItemData();
 
         // При тапе по кнопке добавим один новый элемент списка
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                generateRandomItemData();
+                addItemData();
             }
         });
 
         // Создаем и устанавливаем адаптер на наш список
         adapter = new ItemsDataAdapter(this, null);
         listView.setAdapter(adapter);
-        generateRandomItemData();
+        addItemData();
 
         // При тапе по элементу списка будем показывать его данные
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,11 +66,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
+        //-------------------------------------------------------------
     }
 
-    // Заполним различными картинками, которые встроены в сам Android
+    // Заполним различными картинками от домашних заданий
     // ContextCompat обеспечит нам поддержку старых версий Android
     private void fillImages() {
         images.add(ContextCompat.getDrawable(MainActivity.this,
@@ -89,34 +84,18 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.image221));
         images.add(ContextCompat.getDrawable(MainActivity.this,
                 R.drawable.image311));
-
-  //      images.add(ContextCompat.getDrawable(MainActivity.this,
-  //              android.R.drawable.ic_menu_agenda));
-  //      images.add(ContextCompat.getDrawable(MainActivity.this,
-  //              android.R.drawable.ic_menu_camera));
-  //      images.add(ContextCompat.getDrawable(MainActivity.this,
-  //              android.R.drawable.ic_menu_call));
     }
 
-    // Создадим ну почти случайные данные для нашего списка.
-    // random.nextInt(граница_последнего_элемента)
-    // Для каждого элемента мы возьмем 1 случайную картинку
-    // из 5, которые мы сделали вначале.
-    private void generateRandomItemData() {
+    // Наполнение данными
+    private void addItemData() {
 
-        adapter.addItem(new ItemData(images.get(0), "1.2.1 Универсальная форма ввода", "Приложение “Hello world”", true));
-        adapter.addItem(new ItemData(images.get(1), "1.2.2 Бесконечный переход между экранами", "Приложение “Hello world”", true));
-        adapter.addItem(new ItemData(images.get(2), "2.1.1 Взаимоисключающие CheckBox", "Компоненты View. Иерархия Views”", true));
-        adapter.addItem(new ItemData(images.get(3), "2.1.2 Spinner «Страны-города-улицы»", "Компоненты View. Иерархия Views”", true));
-        adapter.addItem(new ItemData(images.get(4), "2.2.1 Записная книжка в SharedPreferences»", "Компоненты ViewGroup. SharedPrefs", true));
-        adapter.addItem(new ItemData(images.get(5), "3.1.1 Интерфейс калькулятора", "Верстка графического интерфейса в Android", true));
+        adapter.addItem(new ItemData(images.get(0), "1.2.1 Универсальная форма ввода", "Приложение “Hello world”"));
+        adapter.addItem(new ItemData(images.get(1), "1.2.2 Бесконечный переход между экранами", "Приложение “Hello world”"));
+        adapter.addItem(new ItemData(images.get(2), "2.1.1 Взаимоисключающие CheckBox", "Компоненты View. Иерархия Views”"));
+        adapter.addItem(new ItemData(images.get(3), "2.1.2 Spinner «Страны-города-улицы»", "Компоненты View. Иерархия Views”"));
+        adapter.addItem(new ItemData(images.get(4), "2.2.1 Записная книжка в SharedPreferences»", "Компоненты ViewGroup. SharedPrefs"));
+        adapter.addItem(new ItemData(images.get(5), "3.1.1 Интерфейс калькулятора", "Верстка графического интерфейса в Android"));
 
-
-//        adapter.addItem(new ItemData(
- //               images.get(random.nextInt(images.size())),
- //               "Hello" + adapter.getCount(),
- //               "It\'s me",
- //               random.nextBoolean()));
     }
 
     // Покажем сообщение с данными
@@ -124,8 +103,7 @@ public class MainActivity extends AppCompatActivity {
         ItemData itemData = adapter.getItem(position);
         Toast.makeText(MainActivity.this,
                 "Title: " + itemData.getTitle() + "\n" +
-                        "Subtitle: " + itemData.getSubtitle() + "\n" +
-                        "Checked: " + itemData.isChecked(),
+                        "Subtitle: " + itemData.getSubtitle(),
                 Toast.LENGTH_SHORT).show();
     }
 }

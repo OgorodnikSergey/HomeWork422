@@ -3,12 +3,9 @@ package ru.ogorodnik.homework421;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
@@ -26,19 +23,6 @@ public class ItemsDataAdapter extends BaseAdapter {
     // LayoutInflater – класс, который из
     // layout-файла создает View-элемент.
     private LayoutInflater inflater;
-
-    // Слушает все изменения галочки и меняет
-    // состояние конкретного ItemData
-
-    // Скорее всего здесь надо прописать нажатие кнопки Удалить....
-
- //   private CompoundButton.OnCheckedChangeListener myCheckChangeList
- //           = new CompoundButton.OnCheckedChangeListener() {
- //      public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
- //           items.get((Integer) buttonView.getTag());
- //       }
- // };
-
 
     // Конструктор, в который передается контекст
     // для создания контролов из XML. И первоначальный список элементов.
@@ -99,7 +83,7 @@ public class ItemsDataAdapter extends BaseAdapter {
     // Если нет чего переиспользовать, то создается новый View.
     // А потом напоняет старую или новую View нужными данными.
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
             view = inflater.inflate(R.layout.item_list_view, parent, false);
@@ -110,18 +94,20 @@ public class ItemsDataAdapter extends BaseAdapter {
         ImageView image = view.findViewById(R.id.icon);
         TextView title = view.findViewById(R.id.title);
         TextView subtitle = view.findViewById(R.id.subtitle);
-        Button buttonDel = view.findViewById(R.id.buttonDel);
-
+      final Button buttonDel = view.findViewById(R.id.buttonDel);
+//-----------------------------------------------------------------------------------
+// Повесил функцию удаления позиции во вьюшке при нажатии на кнопку "Удалить".
+        buttonDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                items.remove(position);
+                notifyDataSetChanged();
+            }
+        });
+//-----------------------------------------------------------------------------------
         image.setImageDrawable(itemData.getImage());
         title.setText(itemData.getTitle());
         subtitle.setText(itemData.getSubtitle());
-
-        // buttonDel.setOnCheckedChangeListener(myCheckChangeList);
- //       checkBox.setOnCheckedChangeListener(myCheckChangeList);
-
-        //    buttonDel.setOnItemLongClickListener(position);
-       buttonDel.setTag(position);
-     //   buttonDel.setChecked(itemData.isChecked());
 
         return view;
     }
